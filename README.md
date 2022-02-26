@@ -1,11 +1,11 @@
 # 실행방법
 
-repository clone 
-yarn install
-yarn start:staging
+#repository clone 
+#yarn install
+#yarn start:staging
 
 
-혹은 아래 사이트에서 기능을 확인할 수 있습니다.
+#혹은 아래 사이트에서 기능을 확인할 수 있습니다.
 http://datagridprac.s3-website.ap-northeast-2.amazonaws.com/
 
 # 테이블 라이브러리와 차트 라이브러리를 사용해 만든 데이터 시각화 프로젝트 입니다.
