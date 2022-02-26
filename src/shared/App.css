@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  background-color: #fff;
+}
+
+@font-face {
+  font-family: "BMJUA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.react-confirm-alert{
+ 
+}
+
+.react-confirm-alert-body{
+  padding : 40px 20px 40px 55px;
+}

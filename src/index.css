@@ -1,0 +1,7 @@
+@import url(https://fonts.googlepis.com/earlyaccess/notosanskr.css);
+
+div {
+  font-family: "Noto sans KR" !important;
+}
+
+/* !important 전체적용 */
