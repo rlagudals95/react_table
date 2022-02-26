@@ -1,8 +1,8 @@
 # 실행방법
 
-# repository clone 
-# yarn install
-# yarn start:staging
+# 1. repository clone 
+# 2. yarn install
+# 3. yarn start:staging
 
 
 # 혹은 아래 사이트에서 기능을 확인할 수 있습니다.
