@@ -438,7 +438,7 @@ export default function EnhancedTable() {
         dispatch(
           patientActions.setChart([
             { x: "hispanic", y: hispanicCnt },
-            { x: "nonHispanicCnt", y: nonHispanicCnt },
+            { x: "nonHispanic", y: nonHispanicCnt },
           ])
         );
       }
@@ -453,7 +453,7 @@ export default function EnhancedTable() {
       if (filter_name == "age") {
         dispatch(
           patientActions.setChart([
-            { x: "10살 이하", y: ageCnt1 },
+            { x: "10살 미만", y: ageCnt1 },
             { x: "10대", y: ageCnt2 },
             { x: "20대", y: ageCnt3 },
             { x: "30대", y: ageCnt4 },
