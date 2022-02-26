@@ -17,5 +17,7 @@
 ![image](https://user-images.githubusercontent.com/76252074/155842665-1d86975c-3247-479c-a0ca-de867bb52f33.png)
 
 # 돋보기 아이콘 클릭 시 해당 환자의 상세 데이터를 볼 수 있는 모달이 생성됩니다.
+![image](https://user-images.githubusercontent.com/76252074/155842750-80f73148-ea3b-44e2-bc56-9afc042e8f9d.png)
+
 # 추후 모달대신 데이터 row아래 공간이 확장되어 상세 데이터를 볼 수 있는 기능을 추가 할 예정입니다. (MUI DataGrid 라이브러리 공부 필요)
 ![image](https://user-images.githubusercontent.com/76252074/155842681-26f9b1e7-5c00-49b0-a095-63d82d0b07e7.png)
