@@ -18,7 +18,7 @@ const SET_AGE = "SET_AGE";
 const SET_IS_DEATH = "SET_IS_DEATH";
 
 const SET_CHART = "SET_CHART";
-
+const RESET_CHART = "RESET_CHART";
 const SET_DETAIL = "SET_DETAIL";
 
 // 액션 생성 함수를 만듭니다.
@@ -36,6 +36,7 @@ const setAge = createAction(SET_AGE);
 const setIsDeath = createAction(SET_IS_DEATH);
 const setFilter = createAction(SET_FILTER);
 const setChart = createAction(SET_CHART);
+const resetChart = createAction(RESET_CHART);
 
 const setDetail = createAction(SET_DETAIL);
 // 초기 State를 정의합니다.
@@ -53,7 +54,7 @@ const initialState = {
     { x: "data1 (10%)", y: 100 },
     { x: "data2 (20%)", y: 200 },
     { x: "data3 (40%)", y: 400 },
-    { x: "data4 (30%)", y: 300 },
+    { x: "data4 (0%)", y: 300 },
   ],
   chartTotal: 0,
 };
@@ -166,6 +167,15 @@ export default handleActions(
       produce(state, (draft) => {
         draft.detail_data = action.payload;
       }),
+    [RESET_CHART]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chartData = [
+          { x: "data1 (10%)", y: 100 },
+          { x: "data2 (20%)", y: 200 },
+          { x: "data3 (40%)", y: 400 },
+          { x: "data4 (30%)", y: 300 },
+        ];
+      }),
   },
   initialState
 );
@@ -184,6 +194,7 @@ const actionCreators = {
   setRow,
   setChart,
   getDetailApi,
+  resetChart,
 };
 
 export { actionCreators };

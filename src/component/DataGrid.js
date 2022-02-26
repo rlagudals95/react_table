@@ -414,10 +414,6 @@ export default function EnhancedTable() {
       }
     }
 
-    console.log("카운트 인종 :", [
-      { x: "hispanic", y: hispanicCnt },
-      { x: "nonHispanicCnt", y: nonHispanicCnt },
-    ]);
     if (filter) {
       if (filter_name == "gender") {
         dispatch(
@@ -619,7 +615,6 @@ export default function EnhancedTable() {
                         </TableCell>
                       </TableRow>
                       {/*  상세보기 */}
-
                       {/* <TableRow>
                         <TableCell
                           style={{ paddingBottom: 0, paddingTop: 0 }}

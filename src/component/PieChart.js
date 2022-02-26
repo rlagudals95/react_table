@@ -13,25 +13,9 @@ const PieChart = () => {
   );
 
   const [total, setTotal] = useState(0);
-  //   const myData = [
-  //     { x: "male", y: 300 },
-  //     { x: "female", y: 1900 },
-  //   ];
-  // 10은 100에서 몇 퍼센트?
-  //   result = (10 / 100) * 100;
-  //   document.write(result, "%<br />");
-  // 출력 결과: 10%
-  useEffect(() => {
-    console.log("chartData", chartData);
-    let _total = 0;
-    let percent;
-    for (let i = 0; i < chartData.length; i++) {
-      percent = (chartData[i].y / 1000) * 100;
-      //chartData[i].x = percent;
-      //chartData[i].z = 111;
 
-      console.log(parseInt(percent));
-    }
+  useEffect(() => {
+    //console.log("chartData :", chartData);
   }, [chartData]);
   return (
     <div>

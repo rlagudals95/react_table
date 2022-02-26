@@ -32,6 +32,7 @@ function Home() {
   }
   function resetFilter() {
     dispatch(patientActions.setFilter(null));
+    dispatch(patientActions.resetChart(null));
   }
   const { patient_list, filter } = useSelector(
     (state) => ({
@@ -64,7 +65,7 @@ function Home() {
             variant="contained"
             style={{ cursor: "pointer" }}
           >
-            list reset
+            reset
           </Button>
         </FlexBox>
         {/* <DataTable></DataTable> */}
