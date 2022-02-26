@@ -1,8 +1,7 @@
-# redux
-# thunk
-# kakao_auth
-# env
-# router
+# 실행방법
+
+1. yarn install
+2. yarn start:staging
 
 
 
