@@ -4,9 +4,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
-import ScrollToTop from "../config/ScrollToTop";
 import Home from "../pages/Home";
-import Navigation from "../component/Navigation";
 import "../shared/App.css";
 
 function App() {
@@ -28,12 +26,10 @@ function App() {
         {/* <Backbtn history={history}/> */}
 
         <InnerContainer>
-          <ScrollToTop>
-            {/* ScrollToTop을 이용해 페이지가 이동할 때마다 스크롤 최상단으로  */}
-            <Switch>
-              <Route path="/" exact component={Home} />
-            </Switch>
-          </ScrollToTop>
+          {/* ScrollToTop을 이용해 페이지가 이동할 때마다 스크롤 최상단으로  */}
+          <Switch>
+            <Route path="/" exact component={Home} />
+          </Switch>
         </InnerContainer>
         <AppBackground />
       </ConnectedRouter>
@@ -61,5 +57,5 @@ const AppBackground = styled.div`
   height: 100%;
   transform: translate(-50%, -50%);
   z-index: -1;
-  opacity: 0.7;
+  opacity: 0.6;
 `;

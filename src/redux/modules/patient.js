@@ -50,11 +50,12 @@ const initialState = {
   is_death: null,
   _rows: [],
   chartData: [
-    { x: "data1 ", y: 300 },
-    { x: "data2", y: 900 },
-    { x: "data3", y: 400 },
-    { x: "data4", y: 670 },
+    { x: "data1 (10%)", y: 100 },
+    { x: "data2 (20%)", y: 200 },
+    { x: "data3 (40%)", y: 400 },
+    { x: "data4 (30%)", y: 300 },
   ],
+  chartTotal: 0,
 };
 
 // 미들웨어
@@ -103,50 +104,12 @@ const getDetailApi = (id) => {
   };
 };
 
-const setList = () => {
-  return function (dispatch, getState, { history }) {
-    // 필터 적용
-    const _state = getState().patient;
-
-    const gender = _state.gender;
-    const race = _state.race;
-    const ethnicity = _state.ethnicity;
-    const is_death = _state.is_death;
-
-    if (gender) {
-    } else if (race) {
-    } else if (ethnicity) {
-    } else if (is_death) {
-    }
-    console.log("젠더값 가져오기 ", gender, race, ethnicity, is_death);
-
-    dispatch(setPatient({ gender, race, ethnicity, is_death }));
-  };
-};
-
 // 리듀서 함수를 정의합니다.
 export default handleActions(
   {
     [SET_PATIENT]: (state, action) =>
       produce(state, (draft) => {
-        //console.log("페이로드 확인 : ", action.payload);
-        let payload = action.payload;
-        //console.log("페이로드 확인2 : ", action.payload.gender);
-
-        for (let i = 0; i < action.payload.length; i++) {
-          if (action.payload.gender != null) {
-            console.log(1);
-          } else if (payload.race) {
-            console.log(2);
-          } else if (payload.ethnicity) {
-            console.log(3);
-          } else if (payload.is_death) {
-            console.log(4);
-          }
-
-          draft.patient_list.push(action.payload[i]);
-        }
-        //draft.patient_list = action.payload;
+        draft.patient_list = action.payload;
       }),
     [SET_COUNT]: (state, action) =>
       produce(state, (draft) => {
@@ -187,18 +150,20 @@ export default handleActions(
       produce(state, (draft) => {
         draft.filter = action.payload;
       }),
-    [SET_ROW]: (state, action) =>
-      produce(state, (draft) => {
-        //console.log("액션 와라잉 :", action.payload);
-        //draft._rows = action.payload;
-      }),
+    [SET_ROW]: (state, action) => produce(state, (draft) => {}),
     [SET_CHART]: (state, action) =>
       produce(state, (draft) => {
+        let percent;
+        // 차트 데이터 퍼센트 표시
+        for (let i = 0; i < action.payload.length; i++) {
+          percent = (action.payload[i].y / 1000) * 100;
+          action.payload[i].x =
+            action.payload[i].x + " " + "(" + Math.floor(percent) + "%" + ")";
+        }
         draft.chartData = action.payload;
       }),
     [SET_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        console.log("페이로드 검사", action.payload);
         draft.detail_data = action.payload;
       }),
   },
@@ -215,7 +180,6 @@ const actionCreators = {
   setEthnicity,
   setAge,
   setIsDeath,
-  setList,
   setFilter,
   setRow,
   setChart,

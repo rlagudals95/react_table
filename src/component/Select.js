@@ -13,36 +13,12 @@ export default function BasicSelect(props) {
   const handleChange = (event) => {
     console.log("event :: ", event.target.value);
 
-    let filter_value = event.target.value;
+    //let filter_value = event.target.value;
 
     let _name = props.name;
-    //console.log("프롭스 확인 : ", _name);
     dispatch(
       patientActions.setFilter({ name: _name, value: event.target.value })
     );
-
-    // if (_name == "gender") {
-    //   console.log("성별 선택");
-    //   //dispatch(patientActions.setGender(filter_value));
-    //   dispatch(patientActions.setFilter(_name));
-    //   dispatch(patientActions.setList());
-    // } else if (_name == "race") {
-    //   console.log("인종 선택");
-    //   //dispatch(patientActions.setRace(filter_value));
-    //   dispatch(patientActions.setList());
-    // } else if (_name == "ethnicity") {
-    //   console.log("민족 선택");
-    //   //dispatch(patientActions.setEthnicity(filter_value));
-    //   dispatch(patientActions.setList());
-    // } else if (_name == "age") {
-    //   console.log("나이 선택");
-    //   //dispatch(patientActions.setAge(filter_value));
-    //   dispatch(patientActions.setList());
-    // } else if (_name == "isDeath") {
-    //   console.log("생존유무 선택");
-    //   //dispatch(patientActions.setIsDeath(filter_value));
-    //   dispatch(patientActions.setList());
-    // }
 
     setValue(event.target.value);
   };
@@ -56,6 +32,7 @@ export default function BasicSelect(props) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
+            className={props.name}
             value={value}
             label="Age"
             onChange={handleChange}
@@ -63,9 +40,6 @@ export default function BasicSelect(props) {
             {props.option.map((p) => {
               return <MenuItem value={p}>{p}</MenuItem>;
             })}
-            {/* <MenuItem value={10}>{props.option}</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
           </Select>
         </FormControl>
       </Box>

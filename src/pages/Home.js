@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import DataTable from "../component/DataTable";
 import DataGrid from "../component/DataGrid";
 import Select from "../component/Select";
 import { customAxios } from "../config/customAxios";
 import { useSelector, shallowEqual } from "react-redux";
 import PieChart from "../component/PieChart";
+import Button from "@mui/material/Button";
+import { actionCreators as patientActions } from "../redux/modules/patient";
+import { useDispatch } from "react-redux";
 
 function Home() {
+  const dispatch = useDispatch();
   const [gender, setGender] = useState([]);
   const [race, setRace] = useState([]);
   const [ethnicity, setEthnicity] = useState([]);
@@ -27,7 +30,9 @@ function Home() {
     setRace(_race);
     setEthnicity(_ethnicity);
   }
-
+  function resetFilter() {
+    dispatch(patientActions.setFilter(null));
+  }
   const { patient_list, filter } = useSelector(
     (state) => ({
       patient_list: state.patient.patient_list,
@@ -54,6 +59,13 @@ function Home() {
           <Select name="ethnicity" option={ethnicity} />
           <Select name="age" option={age} />
           <Select name="isDeath" option={isDeath} />
+          <Button
+            onClick={resetFilter}
+            variant="contained"
+            style={{ cursor: "pointer" }}
+          >
+            list reset
+          </Button>
         </FlexBox>
         {/* <DataTable></DataTable> */}
         <DataGrid></DataGrid>
@@ -91,6 +103,7 @@ const ChartContainer = styled.div`
   margin: 0px auto;
   display: flex;
   justify-content: center;
+  opacity: 0.8;
 `;
 const GridContainer = styled.div`
   max-height: 500px;

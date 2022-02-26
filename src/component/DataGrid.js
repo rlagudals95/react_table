@@ -278,8 +278,6 @@ export default function EnhancedTable() {
   );
 
   async function getPatientList() {
-    console.log("얘왜이러..", rows);
-
     //const res = await customAxios.get("/api/patient/list");
     await dispatch(patientActions.getPatientApi());
 
@@ -329,9 +327,9 @@ export default function EnhancedTable() {
     let ageCnt8 = 0;
     let ageCnt9 = 0;
     let ageCnt10 = 0;
-
+    //console.log("필터 유무!!", filter);
     if (filter) {
-      //   console.log("필터임니다>!", filter, filter_name);
+      //   console.log("필터 정보", filter, filter_name);
       //   console.log("필터네임과 밸류", p[1].gender, filter_name, filter_value);
       for (let i = 0; i < p.length; i++) {
         //console.log("값확인", p[i].filter_name, filter_value);
@@ -344,8 +342,7 @@ export default function EnhancedTable() {
           if (p[i].gender == filter_value) {
             list.push(p[i]);
           }
-        }
-        if (filter_name == "race") {
+        } else if (filter_name == "race") {
           if (p[i].race == "native") {
             nativeCnt++;
           } else if (p[i].race == "black") {
@@ -358,16 +355,17 @@ export default function EnhancedTable() {
             otherCnt++;
           }
           if (p[i].race == filter_value) list.push(p[i]);
-        }
-        if (filter_name == "ethnicity") {
+        } else if (filter_name == "ethnicity") {
           if (p[i].ethnicity == "hispanic") {
             hispanicCnt++;
           } else {
             nonHispanicCnt++;
           }
-          if (p[i].ethnicity == filter_value) list.push(p[i]);
-        }
-        if (filter_name == "isDeath") {
+
+          if (p[i].ethnicity == filter_value) {
+            list.push(p[i]);
+          }
+        } else if (filter_name == "isDeath") {
           let _isDeath = p[i].isDeath ? "사망" : "생존";
 
           if (p[i].isDeath) {
@@ -379,16 +377,12 @@ export default function EnhancedTable() {
           if (_isDeath == filter_value) list.push(p[i]);
         }
         //console.log("필터이름 :", filter_name);
-        if (filter_name == "age") {
-          console.log(
-            "이게 조건 맞음?",
-            filter_value < parseInt(p[i].age) < filter_value + 9
-          );
-          if (
-            // filter_value < 90 &&
-            filter_value <= p[i].age &&
-            p[i].age <= filter_value + 9
-          ) {
+        else if (filter_name == "age") {
+          //   console.log(
+          //     "나이조건",
+          //     filter_value < parseInt(p[i].age) < filter_value + 9
+          //   );
+          if (filter_value <= p[i].age && p[i].age <= filter_value + 9) {
             rows.length = 0;
             list.push(p[i]);
           }
@@ -412,38 +406,14 @@ export default function EnhancedTable() {
           } else if (80 <= p[i].age && p[i].age < 90) {
             ageCnt10++;
           }
-          //   console.log(
-          //     "나이 범위 :",
-          //     filter_value,
-          //     "//",
-          //     p[i].age,
-          //     "//",
-          //     filter_value + 9
-          //   );
-          //   console.log("필터이름 : ", filter_name);
-          //   console.log("나이 : ", p[i].age);
-          //   console.log("필터 밸류 : ", filter_value);
         }
       }
     } else {
       for (let i = 0; i < p.length; i++) {
-        //console.log(p[i]);
-
         list.push(p[i]);
       }
     }
 
-    // console.log("카운트 확인 성별 :", [
-    //   { male: maleCnt },
-    //   { female: femaleCnt },
-    // ]);
-    // console.log("카운트 인종 :", [
-    //   { native: nativeCnt },
-    //   { black: blackCnt },
-    //   { white: whiteCnt },
-    //   { asian: asianCnt },
-    //   { other: otherCnt },
-    // ]);
     console.log("카운트 인종 :", [
       { x: "hispanic", y: hispanicCnt },
       { x: "nonHispanicCnt", y: nonHispanicCnt },
@@ -501,7 +471,7 @@ export default function EnhancedTable() {
         );
       }
     }
-    console.log(list[1]);
+
     rows.push(...list);
 
     setTimeout(function () {
@@ -530,25 +500,8 @@ export default function EnhancedTable() {
   };
 
   const handleClick = (event, name) => {
-    //const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
     event.stopPropagation();
-    //setOpen(!open);
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, name);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1)
-    //   );
-    // }
-
-    //setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -579,17 +532,12 @@ export default function EnhancedTable() {
     setModalOpen(false);
   };
 
-  //const isSelected = (name) => selected.indexOf(name) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
   const [open, setOpen] = React.useState(false);
 
   return (
     <Box sx={{ width: "100%" }}>
-      {/* 모달 */}
-      {/* <Modal /> */}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -671,6 +619,7 @@ export default function EnhancedTable() {
                         </TableCell>
                       </TableRow>
                       {/*  상세보기 */}
+
                       {/* <TableRow>
                         <TableCell
                           style={{ paddingBottom: 0, paddingTop: 0 }}

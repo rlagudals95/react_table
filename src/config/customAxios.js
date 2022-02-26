@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import { config } from "./confing";
 
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
