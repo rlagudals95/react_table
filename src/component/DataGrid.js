@@ -279,6 +279,7 @@ export default function EnhancedTable() {
 
   async function getPatientList() {
     //const res = await customAxios.get("/api/patient/list");
+    console.log("데이터 가져오기!");
     await dispatch(patientActions.getPatientApi());
 
     let list = [];
@@ -469,15 +470,17 @@ export default function EnhancedTable() {
     }
 
     rows.push(...list);
+  }
 
+  async function setFirst() {
+    await getPatientList();
     setTimeout(function () {
       setLoading(true);
     }, 1000);
   }
 
   useEffect(() => {
-    rows.length = 0;
-    getPatientList();
+    setFirst();
   }, [loading, filter]);
 
   const handleRequestSort = (event, property) => {
