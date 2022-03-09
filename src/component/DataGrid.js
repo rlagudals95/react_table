@@ -262,6 +262,7 @@ export default function EnhancedTable() {
     ethnicity,
     is_death,
     filter,
+    isModal,
     detail_data,
   } = useSelector(
     (state) => ({
@@ -274,6 +275,7 @@ export default function EnhancedTable() {
       filter: state.patient.filter,
       _rows: state.patient.rows,
       detail_data: state.patient.detail_data,
+      isModal: state.patient.isModal,
     }),
     shallowEqual
   );
@@ -466,10 +468,8 @@ export default function EnhancedTable() {
     }
     console.log("정렬 세팅 : ", list);
     dispatch(patientActions.setPatient(list));
-    //rows.push(...list);
   }
 
-  // 렌더링 한번만 작업중...
   function getList() {
     dispatch(patientActions.getPatientApi());
   }
@@ -518,6 +518,7 @@ export default function EnhancedTable() {
 
   // 상세보기
   const showDetail = async (id) => {
+    console.log("상세보기클릭!!");
     await dispatch(patientActions.getDetailApi(id));
     //setOpen(!open);
     handleOpen();
@@ -537,6 +538,7 @@ export default function EnhancedTable() {
 
   return (
     <Box sx={{ width: "100%" }}>
+      {isModal && <Modal detail_data={detail_data} test={"test"} />}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -576,13 +578,13 @@ export default function EnhancedTable() {
                       >
                         <TableCell />
                         <TableCell>
-                          <Modal
+                          {/* <Modal
                             data={detail_data}
                             style={{ cursor: "pointer" }}
-                            onClick={() => showDetail(row.personID)}
+                            // onClick={() => showDetail(row.personID)}
                             tabIndex={-1}
                             key={row.personID}
-                          />
+                          /> */}
                         </TableCell>
                         {/* <TableCell>
                           <IconButton

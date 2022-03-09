@@ -7,6 +7,7 @@ import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { formControlClasses } from "@mui/material";
 import styled from "styled-components";
+import { actionCreators as patientActions } from "../redux/modules/patient";
 
 const style = {
   position: "absolute",
@@ -22,61 +23,35 @@ const style = {
   pb: 3,
 };
 
-// function ChildModal() {
-//   const [open, setOpen] = React.useState(false);
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   return (
-//     <React.Fragment>
-//       <Button onClick={handleOpen}>
-//         <ZoomInIcon />
-//       </Button>
-//       <Modal
-//         hideBackdrop
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="child-modal-title"
-//         aria-describedby="child-modal-description"
-//       >
-//         <Box sx={{ ...style, width: 200 }}>
-//           <h2 id="child-modal-title">Text in a child modal</h2>
-//           <p id="child-modal-description">}</p>
-//           <Button onClick={handleClose}>Close Child Modal</Button>
-//         </Box>
-//       </Modal>
-//     </React.Fragment>
-//   );
 // }
 
 export default function NestedModal(props) {
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(true);
 
+  const { detail_data } = useSelector(
+    (state) => ({
+      detail_data: state.patient.detail_data,
+    }),
+    shallowEqual
+  );
+  const { isModal } = useSelector(
+    (state) => ({
+      isModal: state.patient.isModal,
+    }),
+    shallowEqual
+  );
   const handleOpen = () => {
-    setOpen(true);
+    //setOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    //setOpen(false);
+    dispatch(patientActions.isModal(false));
   };
-
-  let conditionList = "진단정보";
-
-  function renderConditionList() {
-    if (props.data) {
-      conditionList = props.data.conditionList;
-    }
-  }
 
   return (
     <div>
-      <Button onClick={handleOpen}>
-        <ZoomInIcon></ZoomInIcon>
-      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -86,11 +61,11 @@ export default function NestedModal(props) {
         <Box sx={{ ...style, width: 400 }}>
           <h2 id="parent-modal-title">환자 상세정보</h2>
           <p id="parent-modal-description">
-            방문 횟수 : {props.data && props.data.visitCount}
+            방문 횟수 : {props.detail_data && props.detail_data.visitCount}
           </p>
           <p>진단정보</p>
           <p id="parent-modal-description">
-            {props.data && props.data.conditionList}
+            {props.detail_data && props.detail_data.conditionList}
           </p>
 
           {/* <ChildModal /> */}

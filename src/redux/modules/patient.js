@@ -22,6 +22,8 @@ const SET_CHART = "SET_CHART";
 const RESET_CHART = "RESET_CHART";
 const SET_DETAIL = "SET_DETAIL";
 
+const IS_MODAL = "IS_MODAL";
+
 // 액션 생성 함수를 만듭니다.
 const setPatient = createAction(SET_PATIENT);
 const setAllList = createAction(SET_ALL_LIST);
@@ -40,12 +42,15 @@ const setFilter = createAction(SET_FILTER);
 const setChart = createAction(SET_CHART);
 const resetChart = createAction(RESET_CHART);
 
+// modal
+const isModal = createAction(IS_MODAL);
+
 const setDetail = createAction(SET_DETAIL);
 // 초기 State를 정의합니다.
 const initialState = {
   detail_data: null,
   patient_list: [],
-  all_patient_list : [],
+  all_patient_list: [],
   isLoding: false,
   filter: null,
   gender: null,
@@ -60,6 +65,7 @@ const initialState = {
     { x: "data4 (0%)", y: 300 },
   ],
   chartTotal: 0,
+  isModal: false,
 };
 
 // 미들웨어
@@ -101,10 +107,7 @@ const getDetailApi = (id) => {
       .then((res) => {
         console.log("상세보기 정보 :", res.data);
         dispatch(setDetail(res.data));
-        // let list = res.data.patient.list;
-        // console.log("리스트 코드 : ", list);
-        // dispatch(setPatient(list));
-        // dispatch(isLoding());
+        dispatch(isModal(true));
       })
       .catch((err) => {});
   };
@@ -187,6 +190,10 @@ export default handleActions(
           { x: "data4 (30%)", y: 300 },
         ];
       }),
+    [IS_MODAL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.isModal = action.payload;
+      }),
   },
   initialState
 );
@@ -208,6 +215,7 @@ const actionCreators = {
   resetChart,
   setPatient,
   setAllList,
+  isModal,
 };
 
 export { actionCreators };

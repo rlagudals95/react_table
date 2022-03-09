@@ -5,6 +5,8 @@ import Select from "../component/Select";
 import { customAxios } from "../config/customAxios";
 import { useSelector, shallowEqual } from "react-redux";
 import PieChart from "../component/PieChart";
+import ReChart from "../component/Rechart";
+
 import Button from "@mui/material/Button";
 import { actionCreators as patientActions } from "../redux/modules/patient";
 import { useDispatch } from "react-redux";
@@ -52,6 +54,7 @@ function Home() {
         <ChartContainer>
           <h3>필터를 선택하면 차트 데이터를 볼 수 있습니다 :)</h3>
           <PieChart />
+          <ReChart />
         </ChartContainer>
         <h3>Filter</h3>
         <FlexBox>
