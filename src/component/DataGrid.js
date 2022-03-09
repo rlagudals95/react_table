@@ -39,8 +39,6 @@ function createData(name, calories, fat, carbs, protein) {
   };
 }
 
-const rows = [];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -276,11 +274,13 @@ export default function EnhancedTable() {
     }),
     shallowEqual
   );
-
+  //console.log('환자리스트!! :',patient_list)
+  const rows = patient_list;
+  //const rows = [];
   async function getPatientList() {
     //const res = await customAxios.get("/api/patient/list");
-    console.log("데이터 가져오기!");
-    await dispatch(patientActions.getPatientApi());
+    //console.log("데이터 가져오기!");
+    //await dispatch(patientActions.getPatientApi());
 
     let list = [];
     let _filter_list = [gender, race, ethnicity, is_death];
@@ -468,19 +468,22 @@ export default function EnhancedTable() {
         );
       }
     }
-
-    rows.push(...list);
+    dispatch(patientActions.setPatient(list));
+    //rows.push(...list);
   }
 
-  async function setFirst() {
-    await getPatientList();
-    setTimeout(function () {
-      setLoading(true);
-    }, 1000);
+  // 렌더링 한번만 작업중...
+  function getOnly() {
+    // const res = await customAxios.get("/api/patient/list");
+    // let p_list = res.data.patient.list
+    // console.log('잘오냐?',p_list)
+    // dispatch(patientActions.setPatient(p_list))
+    dispatch(patientActions.getPatientApi());
   }
 
   useEffect(() => {
-    setFirst();
+    getOnly();
+    //setFirst();
   }, [loading, filter]);
 
   const handleRequestSort = (event, property) => {
