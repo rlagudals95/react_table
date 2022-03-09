@@ -4,6 +4,7 @@ import { customAxios } from "../../config/customAxios";
 import axios from "axios";
 
 // 액션 타입을 정의해줍니다.
+const SET_ALL_LIST = "SET_ALL_LIST";
 const SET_PATIENT = "SET_PATIENT";
 const SET_COUNT = "SET_COUNT";
 const SET_PAGING = "SET_PAGING";
@@ -23,6 +24,7 @@ const SET_DETAIL = "SET_DETAIL";
 
 // 액션 생성 함수를 만듭니다.
 const setPatient = createAction(SET_PATIENT);
+const setAllList = createAction(SET_ALL_LIST);
 const setCount = createAction(SET_COUNT);
 const setPaging = createAction(SET_PAGING);
 const isLoding = createAction(IS_LOADING);
@@ -43,6 +45,7 @@ const setDetail = createAction(SET_DETAIL);
 const initialState = {
   detail_data: null,
   patient_list: [],
+  all_patient_list : [],
   isLoding: false,
   filter: null,
   gender: null,
@@ -68,6 +71,8 @@ const getPatientApi = () => {
         let list = res.data.patient.list;
         //console.log("리스트 코드 : ", list);
         dispatch(setPatient(list));
+        // 필터 선택시 모든 데이터중에서 적용하기 위해 따로 데이터 메모
+        dispatch(setAllList(list));
         dispatch(isLoding());
       })
       .catch((err) => {});
@@ -110,7 +115,13 @@ export default handleActions(
   {
     [SET_PATIENT]: (state, action) =>
       produce(state, (draft) => {
+        console.log("리스트 변경 : ", action.payload);
         draft.patient_list = action.payload;
+      }),
+    [SET_ALL_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("리스트 변경 : ", action.payload);
+        draft.all_patient_list = action.payload;
       }),
     [SET_COUNT]: (state, action) =>
       produce(state, (draft) => {
@@ -195,6 +206,8 @@ const actionCreators = {
   setChart,
   getDetailApi,
   resetChart,
+  setPatient,
+  setAllList,
 };
 
 export { actionCreators };

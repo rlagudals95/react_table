@@ -247,6 +247,7 @@ export default function EnhancedTable() {
 
   const [conditionList, setConditionList] = useState([]);
   const [visitCount, setVisitCount] = useState("방문 횟수 ");
+  const [first, setFirst] = useState(true);
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -255,6 +256,7 @@ export default function EnhancedTable() {
 
   const {
     patient_list,
+    all_patient_list,
     gender,
     race,
     ethnicity,
@@ -264,6 +266,7 @@ export default function EnhancedTable() {
   } = useSelector(
     (state) => ({
       patient_list: state.patient.patient_list,
+      all_patient_list: state.patient.all_patient_list,
       gender: state.patient.gender,
       race: state.patient.race,
       ethnicity: state.patient.ethnicity,
@@ -274,14 +277,10 @@ export default function EnhancedTable() {
     }),
     shallowEqual
   );
-  //console.log('환자리스트!! :',patient_list)
+
   const rows = patient_list;
   //const rows = [];
-  async function getPatientList() {
-    //const res = await customAxios.get("/api/patient/list");
-    //console.log("데이터 가져오기!");
-    //await dispatch(patientActions.getPatientApi());
-
+  async function setList() {
     let list = [];
     let _filter_list = [gender, race, ethnicity, is_death];
 
@@ -292,9 +291,7 @@ export default function EnhancedTable() {
     }
     let filter_list = [];
 
-    let flag;
-
-    const p = patient_list;
+    const p = all_patient_list;
     let filter_name = filter ? filter.name : null;
     let filter_value = filter ? filter.value : null;
 
@@ -384,7 +381,6 @@ export default function EnhancedTable() {
           //     filter_value < parseInt(p[i].age) < filter_value + 9
           //   );
           if (filter_value <= p[i].age && p[i].age <= filter_value + 9) {
-            rows.length = 0;
             list.push(p[i]);
           }
 
@@ -468,22 +464,23 @@ export default function EnhancedTable() {
         );
       }
     }
+    console.log("정렬 세팅 : ", list);
     dispatch(patientActions.setPatient(list));
     //rows.push(...list);
   }
 
   // 렌더링 한번만 작업중...
-  function getOnly() {
-    // const res = await customAxios.get("/api/patient/list");
-    // let p_list = res.data.patient.list
-    // console.log('잘오냐?',p_list)
-    // dispatch(patientActions.setPatient(p_list))
+  function getList() {
     dispatch(patientActions.getPatientApi());
   }
 
   useEffect(() => {
-    getOnly();
-    //setFirst();
+    if (first) {
+      getList();
+    } else {
+      setList();
+    }
+    setFirst(false);
   }, [loading, filter]);
 
   const handleRequestSort = (event, property) => {
